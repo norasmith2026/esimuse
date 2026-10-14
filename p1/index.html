@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9eSim Card – Setup & Troubleshooting</title>
+<meta name="description" content="Fix 9eSim Card problems in one tap.">
+<meta property="og:title" content="9eSim Card – Setup & Troubleshooting">
+<meta property="og:description" content="Fix 9eSim Card problems in one tap.">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta name="theme-color" content="#1D9E75">
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function () {
+  function detect() {
+    try {
+      var saved = localStorage.getItem('phc_lang');
+      if (saved === 'en' || saved === 'fil') return saved;
+    } catch (e) {}
+    var nav = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    return /^fil|^tl/i.test(nav) ? 'fil' : 'en';
+  }
+  window.__phcLang = detect();
+  document.write('<script src="../data/' + window.__phcLang + '.js"><\/script>');
+})();
+</script>
+</head>
+<body data-page="product" data-product="p1">
+<div id="app"></div>
+<script src="../assets/app.js"></script>
+</body>
+</html>
+

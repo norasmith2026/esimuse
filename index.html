@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eSIM Card – Setup & Troubleshooting</title>
+<meta name="description" content="Fix common eSIM card problems: QR scanning, writing profiles, iPhone switching, compatibility checks. Guides for every eSIM card model.">
+<meta property="og:title" content="eSIM Card – Setup & Troubleshooting">
+<meta property="og:description" content="Fix common eSIM card problems: QR scanning, writing profiles, iPhone switching, compatibility checks.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#1D9E75">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+(function () {
+  function detect() {
+    try {
+      var saved = localStorage.getItem('phc_lang');
+      if (saved === 'en' || saved === 'fil') return saved;
+    } catch (e) {}
+    var nav = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    return /^fil|^tl/i.test(nav) ? 'fil' : 'en';
+  }
+  window.__phcLang = detect();
+  document.write('<script src="data/' + window.__phcLang + '.js"><\/script>');
+})();
+</script>
+</head>
+<body data-page="category">
+<div id="app"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- Viber fallback page (§7.4): opens Viber with prefill; catches desktops without Viber.
+     MUST stay dependency-free and instant: no fonts, no stylesheet, no data files.
+     Contact filled 2026-10-14: Viber +63 992 739 1353, Facebook profile link.
+     (Reminder: data/*.js and this page hold the same Viber number — always edit BOTH.) -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opening Viber…</title>
+<meta name="robots" content="noindex">
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 24px 16px;
+         color: #1c2430; background: #fff; max-width: 480px; margin: 0 auto; }
+  #msg { color: #4a5561; margin: 8px 0 20px; }
+  .btn { display: block; text-align: center; text-decoration: none; font-weight: 500;
+         border-radius: 12px; padding: 14px 16px; min-height: 48px; box-sizing: border-box; }
+  .btn-msgr { background: #1D9E75; color: #fff; }
+  .number { display: block; margin-top: 18px; font-size: 15px; color: #4a5561; text-align: center; }
+  .number b { display: block; font-size: 20px; color: #1c2430; margin-top: 4px; user-select: all; }
+  #fallback { display: none; }
+  h2 { font-size: 17px; }
+</style>
+</head>
+<body>
+<p id="msg">Opening Viber…</p>
+
+<div id="fallback">
+  <h2>Don't have Viber?</h2>
+  <a class="btn btn-msgr" id="msgr-link" href="https://www.facebook.com/profile.php?id=100092127695011">Message us on Facebook</a>
+  <span class="number">Or add us on Viber:<b id="viber-number">+63 992 739 1353</b></span>
+</div>
+
+<noscript>
+  <h2>Don't have Viber?</h2>
+  <a class="btn btn-msgr" href="https://www.facebook.com/profile.php?id=100092127695011">Message us on Facebook</a>
+  <span class="number">Or add us on Viber:<b>+63 992 739 1353</b></span>
+</noscript>
+
+<script>
+/* Viber number: pure digits in E.164 (no +, no spaces). The + is URL-encoded as %2B below. */
+var VIBER_NUMBER = '639927391353';
+var MESSENGER_URL = 'https://www.facebook.com/profile.php?id=100092127695011';
+
+/* build the prefill text from what the customer picked on the help pages (best effort) */
+function prefillText() {
+  var model = '', issue = '';
+  try { model = localStorage.getItem('phc_product_name') || localStorage.getItem('phc_product') || ''; } catch (e) {}
+  try { issue = sessionStorage.getItem('phc_issue') || ''; } catch (e) {}
+  var s = 'Hi, need help with my device.';
+  if (model) s += ' Model: ' + model + '.';
+  if (issue) s += ' Issue: ' + issue + '.';
+  return s.slice(0, 280);
+}
+
+(function () {
+  document.getElementById('msgr-link').href = MESSENGER_URL;
+  var target = 'viber://chat?number=%2B' + VIBER_NUMBER + '&text=' + encodeURIComponent(prefillText());
+  /* replace(): no history entry, so Back goes straight to the help page, not this interstitial */
+  location.replace(target);
+
+  /* 1.5 s timeout: if we are still here (typical: desktop without Viber), rescue the customer */
+  setTimeout(function () {
+    var msg = document.getElementById('msg');
+    var fb = document.getElementById('fallback');
+    if (msg && document.visibilityState !== 'hidden' && !document.hidden) {
+      msg.textContent = 'Viber did not open.';
+      fb.style.display = 'block';
+    }
+  }, 1500);
+})();
+</script>
+</body>
+</html>
